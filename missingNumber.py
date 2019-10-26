@@ -92,7 +92,7 @@ def missingNumber_4(filename):
     and distribute the tally operation across the cores.
     '''
 
-    DEFAULT_MAX_CHUNK_SIZE = 10000
+    DEFAULT_MAX_CHUNK_SIZE = 2
 
     mapper = SimpleMapReduce(map_linenumbers, reducer)
 
@@ -103,8 +103,9 @@ def missingNumber_4(filename):
     # get sum of all numbers
     # get guassian sum
     # subtract sum from guassiang sum
-
-    return results
+    s, n = results[0]
+    n += 1
+    return ((n * (n+1)) / 2) - s
 
 def map_linenumbers(line):
     print("line", line)
@@ -113,8 +114,8 @@ def map_linenumbers(line):
 
 def reducer(item):
     print("item", item)
-    c, value = item
-    return((sum(c), sum(value)))
+    p, n = item
+    return(sum(n), len(n))
 
 
 ###############################################################################
